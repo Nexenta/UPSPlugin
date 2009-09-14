@@ -1,0 +1,57 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+export DH_COMPAT=4
+
+PACKAGE=$(shell dh_listpackages)
+PLUGINDIR=var/lib/nza/plugins/nms/$(PACKAGE)
+BLEACH_FLTR=NZA\|SNAPUtil.pm\|SMFUtil.pm
+
+clean:
+	dh_testdir
+	dh_testroot
+	dh_clean -d
+	rm -rf debian/$(PACKAGE) debian/Ups.pm debian/Consts.pm debian/files
+
+deploy-dirs:
+	rm -rf /$(PLUGINDIR)
+	mkdir -p /$(PLUGINDIR) 2>/dev/null || true
+	ln -s $(PWD)/metafile.pm /$(PLUGINDIR) || true
+	ln -s $(PWD)/Ups.pm /$(PLUGINDIR) || true
+	ln -s $(PWD)/ups-methods.hlp /$(PLUGINDIR) || true
+	ln -s $(PWD)/ups-props.hlp /$(PLUGINDIR) || true
+	ln -s $(PWD)/Consts.pm /$(PLUGINDIR) || true
+
+deploy: deploy-dirs
+	dh_testdir
+	dh_testroot
+	#
+	# deploy NMS-services
+	#
+	../../nms/trunk/debian/bleach-it.pl Ups.pm debian/Ups.pm
+	../../nms/trunk/debian/bleach-it.pl Consts.pm debian/Consts.pm
+
+binary-arch: deploy
+	dh_testdir
+	dh_testroot
+	dh_installdirs $(PLUGINDIR)
+	dh_install metafile.pm $(PLUGINDIR)
+	dh_install ups-methods.hlp $(PLUGINDIR)
+	dh_install ups-props.hlp $(PLUGINDIR)
+	dh_install debian/Ups.pm $(PLUGINDIR)
+	dh_install debian/Consts.pm $(PLUGINDIR)
+	dh_installdocs
+	dh_installchangelogs
+	dh_compress
+	dh_fixperms
+	dh_makeshlibs
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-arch
+.PHONY: build clean binary-arch binary
+
