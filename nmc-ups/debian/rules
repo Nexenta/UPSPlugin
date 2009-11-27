@@ -6,7 +6,6 @@ export DH_COMPAT=4
 
 PACKAGE=$(shell dh_listpackages)
 PLUGINDIR=var/lib/nza/plugins/nmc/$(PACKAGE)
-BLEACH_FLTR=NZA\|SNAPUtil.pm\|SMFUtil.pm
 
 clean:
 	dh_testdir
@@ -23,17 +22,13 @@ deploy-dirs:
 deploy: deploy-dirs
 	dh_testdir
 	dh_testroot
-	#
-	# deploy NMS-services
-	#
-	../../nms/trunk/debian/bleach-it.pl UPS.pm debian/UPS.pm
 
 binary-arch:
 	dh_testdir
 	dh_testroot
 	dh_installdirs $(PLUGINDIR)
 	dh_install metafile.pm $(PLUGINDIR)
-	dh_install debian/UPS.pm $(PLUGINDIR)
+	dh_install UPS.pm $(PLUGINDIR)
 	dh_installdocs
 	dh_installchangelogs
 	dh_compress
