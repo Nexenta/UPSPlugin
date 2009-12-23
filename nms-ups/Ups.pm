@@ -362,7 +362,7 @@ sub new {
 		unless(-e $NZA::NUT_DEFAULT_CONFIG_FILE);
 
 	my $ndcf = new NZA::IniStyleConfig($NZA::NUT_DEFAULT_CONFIG_FILE);
-	TRACE($NZA::TRACE_LEVEL_V, "WARNING: Option '$NZA::PropStartUPSD' must be a 'yes' value in '$NZA::NUT_DEFAULT_CONFIG_FILE'")
+	TRACE($NZA::TRACE_LEVEL_V, "WARNING: Option '$NZA::UPS::PropStartUPSD' must be a 'yes' value in '$NZA::NUT_DEFAULT_CONFIG_FILE'")
 		unless($ndcf->option_exists(undef, $NZA::UPS::PropStartUPSD) &&
 			$ndcf->get_option(undef, $NZA::UPS::PropStartUPSD) =~ /yes/i);
 	
