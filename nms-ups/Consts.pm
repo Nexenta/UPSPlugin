@@ -50,7 +50,6 @@ $Exception::UPS::DriverNotSupported = 'DriverNotSupported';
 # Config files
 #################################################
 
-$NZA::NUT_DEFAULT_CONFIG_FILE = '/etc/default/nut';
 $NZA::UPS_CONF_FILE = '/etc/nut/ups.conf';
 $NZA::UPSD_USERS_CONF_FILE = '/etc/nut/upsd.users';
 

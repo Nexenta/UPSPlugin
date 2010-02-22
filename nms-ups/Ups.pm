@@ -357,14 +357,6 @@ $NZA::UPS::PropStartUPSD = 'START_UPSD';
 #constructor
 sub new {
 	my ($class, $ipc) = @_;
-
-	TRACE($NZA::TRACE_LEVEL_V, "WARNING: Default config file '$NZA::NUT_DEFAULT_CONFIG_FILE' for NUT not found")
-		unless(-e $NZA::NUT_DEFAULT_CONFIG_FILE);
-
-	my $ndcf = new NZA::IniStyleConfig($NZA::NUT_DEFAULT_CONFIG_FILE);
-	TRACE($NZA::TRACE_LEVEL_V, "WARNING: Option '$NZA::UPS::PropStartUPSD' must be a 'yes' value in '$NZA::NUT_DEFAULT_CONFIG_FILE'")
-		unless($ndcf->option_exists(undef, $NZA::UPS::PropStartUPSD) &&
-			$ndcf->get_option(undef, $NZA::UPS::PropStartUPSD) =~ /yes/i);
 	
 	my $self = $class->SUPER::new('UpsContainer', $ipc);
 	bless $self, $class;

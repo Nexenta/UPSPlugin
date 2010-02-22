@@ -254,7 +254,7 @@ sub _get_free_usb_devices
 
 sub _get_free_serial_ports
 {
-	my @files = </dev/cua*>;
+	my @files = </dev/tty0*>;
 	my $busy = _get_busy_serial_ports();
 	my @free = ();
 
