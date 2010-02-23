@@ -668,6 +668,9 @@ sub configure_serial_ups {
 	# create child object
 	my $obj = new NZA::Ups($name, $NZA::UPS::SerialType);
 	$self->attach($obj, 1);
+	
+	#commit changes in config
+	$cfg->commit_on_change("Configuring new UPS");
 }
 
 sub get_service_state {
