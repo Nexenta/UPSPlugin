@@ -620,6 +620,9 @@ sub configure_usb_hid_ups {
 	# create child object
 	my $obj = new NZA::Ups($name, $NZA::UPS::USBType);
 	$self->attach($obj, 1);
+	
+	#commit changes in config
+	$cfg->commit_on_change("Configuring new USB device");
 }
 
 # Configure serial UPS
@@ -670,7 +673,7 @@ sub configure_serial_ups {
 	$self->attach($obj, 1);
 	
 	#commit changes in config
-	$cfg->commit_on_change("Configuring new UPS");
+	$cfg->commit_on_change("Configuring new SERIAL device");
 }
 
 sub get_service_state {
