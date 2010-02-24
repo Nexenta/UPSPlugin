@@ -33,7 +33,7 @@ $Plugin::Ups::AUTHOR		= 'Nexenta Systems, Inc';
 $Plugin::Ups::LICENSE		= 'Commercial';
 $Plugin::Ups::DESCRIPTION	= 'UPS monitoring and easy management extension';
 $Plugin::Ups::GROUP		= '!ups';
-$Plugin::Ups::VERSION		= '0.8';
+$Plugin::Ups::VERSION		= '0.9';
 $Plugin::Ups::IPC_PATH		= '/Root/Ups';
 @Plugin::Ups::FILES		= ('Ups.pm', 'Consts.pm');
 

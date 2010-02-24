@@ -35,7 +35,7 @@ $Plugin::NmcUPS::DESCRIPTION	= 'UPS monitoring and easy management extension for
 $Plugin::NmcUPS::AUTHOR		= 'Nexenta Systems, Inc';
 $Plugin::NmcUPS::LICENSE	= 'CDDL';
 $Plugin::NmcUPS::GROUP		= 'ups';
-$Plugin::NmcUPS::VERSION	= '0.8';
+$Plugin::NmcUPS::VERSION	= '0.9';
 $Plugin::NmcUPS::LOADER		= 'UPS.pm';
 @Plugin::NmcUPS::FILES		= ('UPS.pm');
 
