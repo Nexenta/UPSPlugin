@@ -154,6 +154,8 @@ sub set_params {
 			$cfg->remove_option($sn, $key);
 		}
 	}
+	
+	cfg->->commit_on_change("Changing USB configuration");
 }
 
 sub get_params {
@@ -489,9 +491,11 @@ sub remove_ups {
 	die new NZA::Exception($Exception::DeviceNotFound,
 		"UPS name $name not found") if (!$self->object_exists($name));
 
-	if ($self->object_exists($name)) {
+	if ($self->object_exists($name))
+	{
 		$self->{configuration}->remove_section($name);
-        	$self->get_object($name)->destroy();
+		$self->{configuration}->commit_on_change("Removing UPS configuration");
+        $self->get_object($name)->destroy();
 	}
 }
 
