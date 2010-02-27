@@ -3,14 +3,7 @@
 #first of all, need to set nut MODE
 sed -i -e 's/^\s*MODE\s*=.*/MODE=standalone/g' /etc/nut/nut.conf
 
-#create upsd.users and set rights
-touch /etc/nut/upsd.users
-chmod 640 /etc/nut/upsd.users
-chown root:nut /etc/nut/upsd.users
-
-#create upsd.conf and set right
+#create upsd.conf
 touch /etc/nut/upsd.conf
-chmod 640 /etc/nut/upsd.conf
-chown root:nut /etc/nut/upsd.conf
 echo "LISTEN 127.0.0.1 3493" > /etc/nut/upsd.conf
 echo "MAXCONN 256" >> /etc/nut/upsd.conf
