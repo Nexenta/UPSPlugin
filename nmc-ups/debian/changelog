@@ -1,3 +1,9 @@
+nmc-ups (0.9) elatte; urgency=low
+
+  * Added support of NUT 2.4.1 and some fixes
+
+ -- Andrey <andrey@nexenta.com>  Wed,  3 March 2010 19:55:32 -0300
+
 nmc-ups (0.8) elatte; urgency=low
 
   * vers. bump
