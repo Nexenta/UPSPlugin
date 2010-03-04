@@ -155,7 +155,7 @@ sub set_params {
 		}
 	}
 	
-	cfg->->commit_on_change("Changing USB configuration");
+	$cfg->commit_on_change("Changing USB configuration");
 }
 
 sub get_params {
