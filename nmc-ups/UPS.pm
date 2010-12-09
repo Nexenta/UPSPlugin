@@ -89,7 +89,7 @@ my %setup_ups_words =
 			_usage => \&setup_cfg_remove_usage,
 		},
 		
-		modify => {
+		'modify' => {
 			_help => ["add, modify or remove property from UPS configuration"],
 			_usage => \&setup_modify_usage,
 

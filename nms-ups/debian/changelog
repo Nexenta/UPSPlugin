@@ -1,3 +1,9 @@
+nms-ups (1.0) elatte; urgency=low
+
+  * Fixed USB driver issues
+
+ -- Alek <alek@nexenta.com>  Wed, 08 Dec 2010 17:08:46 -0800
+
 nms-ups (0.9) elatte; urgency=low
 
   * Added support of NUT 2.4.1 and some fixes

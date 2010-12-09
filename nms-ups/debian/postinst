@@ -2,6 +2,8 @@
 
 #first of all, need to set nut MODE
 sed -i -e 's/^\s*MODE\s*=.*/MODE=standalone/g' /etc/nut/nut.conf
+#second of all, need to make upsdrvctl run as root
+sed -i -e 's/upsdrvctl=\/sbin\/upsdrvctl/upsdrvctl="\/sbin\/upsdrvctl -u root"/g' /etc/init.d/nut
 
 #create upsd.conf
 touch /etc/nut/upsd.conf
