@@ -1,12 +1,12 @@
 Source: nmc-ups
 Section: base
 Priority: optional
-Maintainer: Alexey Kurgan <izhscorp@gmail.com>
-Build-Depends: debhelper(>=4.9.5gnusol5)
+Maintainer: Nexenta Systems <maintainer@nexenta.com>
+Build-Depends: debhelper(>= 40-0-6)
 
 Package: nmc-ups
-Architecture: solaris-i386
-Depends: ${shlibs:Depends}, nmc (>= 1.0.7), nms-ups (>= 0.1)
+Architecture: any
+Depends: ${perl:Depends}, nmc (>= 40-0-0), nms-ups (>= 40-0-0)
 Description: [:nxplugin::nmc:ups] UPS monitoring and easy management extension for NMC
  UPS monitoring and easy management extension for Nexenta Management Console
  .

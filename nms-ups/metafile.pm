@@ -20,25 +20,21 @@
 #
 
 #
-# Copyright (C) 2006-2009 Nexenta Systems, Inc.
+# Copyright (C) 2005-2011 Nexenta Systems, Inc.
 # All rights reserved.
 #
 package Plugin::Ups;
 use base qw(NZA::IpcPlugin);
 
-$Plugin::CLASS			= 'Ups';
+$Plugin::CLASS = 'Ups';
 
-$Plugin::Ups::NAME		= 'nms-ups';
-$Plugin::Ups::AUTHOR		= 'Nexenta Systems, Inc';
-$Plugin::Ups::LICENSE		= 'Commercial';
-$Plugin::Ups::DESCRIPTION	= 'UPS monitoring and easy management extension';
-$Plugin::Ups::GROUP		= '!ups';
-$Plugin::Ups::VERSION		= '0.9';
-$Plugin::Ups::IPC_PATH		= '/Root/Ups';
-@Plugin::Ups::FILES		= ('Ups.pm', 'Consts.pm');
-
-$Plugin::Ups::HELP_METHODS_FILE	= 'ups-methods.hlp';
-$Plugin::Ups::HELP_PROPS_FILE	= 'ups-props.hlp';
+$Plugin::Ups::NAME         = 'nms-ups';
+$Plugin::Ups::AUTHOR       = 'Nexenta Systems, Inc';
+$Plugin::Ups::LICENSE      = 'Commercial';
+$Plugin::Ups::DESCRIPTION  = 'UPS monitoring and easy management extension';
+$Plugin::Ups::GROUP        = '!ups';
+$Plugin::Ups::IPC_PATH     = '/Root/Ups';
+@Plugin::Ups::FILES        = ('Ups.pm', 'Consts.pm');
 
 require 'nms-ups/Ups.pm';
 

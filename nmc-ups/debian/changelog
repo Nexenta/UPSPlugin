@@ -1,3 +1,12 @@
+nmc-ups (40-0-0) unstable; urgency=low
+
+  * Migrated to NexentaStor 4.x
+  * Changed maintainer to Nexenta Systems
+  * Fixed debian/rules to use new debhelper
+  * Added top-level Makefile
+
+ -- Nexenta Systems <maintainer@nexenta.com>  Thu, 25 Aug 2011 21:54:21 +0400
+
 nmc-ups (1.0) elatte; urgency=low
 
   * Fixed USB driver issues

@@ -1,45 +1,4 @@
 #!/usr/bin/make -f
 
-# Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
-export DH_COMPAT=4
-
-PACKAGE=$(shell dh_listpackages)
-PLUGINDIR=var/lib/nza/plugins/nmc/$(PACKAGE)
-
-clean:
-	dh_testdir
-	dh_testroot
-	dh_clean -d
-	rm -rf debian/$(PACKAGE) debian/UPS.pm debian/files
-
-deploy-dirs:
-	rm -rf /$(PLUGINDIR)
-	mkdir -p /$(PLUGINDIR) 2>/dev/null || true
-	ln -s $(PWD)/metafile.pm /$(PLUGINDIR) || true
-	ln -s $(PWD)/UPS.pm /$(PLUGINDIR) || true
-
-deploy: deploy-dirs
-	dh_testdir
-	dh_testroot
-
-binary-arch:
-	dh_testdir
-	dh_testroot
-	dh_installdirs $(PLUGINDIR)
-	dh_install metafile.pm $(PLUGINDIR)
-	dh_install UPS.pm $(PLUGINDIR)
-	dh_installdocs
-	dh_installchangelogs
-	dh_compress
-	dh_fixperms
-	dh_makeshlibs
-	dh_installdeb
-	dh_shlibdeps
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
-
-binary: binary-arch
-.PHONY: build clean binary-arch binary
-
+%:
+	dh $@

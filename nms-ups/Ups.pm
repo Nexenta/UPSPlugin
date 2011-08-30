@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (C) 2006-2009 Nexenta Systems, Inc.
+# Copyright (C) 2005-2011 Nexenta Systems, Inc.
 # All rights reserved.
 #
 
@@ -80,7 +80,7 @@ sub outlet_status {
 	my ($self, $num) = @_;
 
 	$self->_check_outlet_num($num);
-	
+
 	my %outlet_status = ();
 	my $vars = $self->get_status();
 	foreach my $var (keys %$vars) {
@@ -110,7 +110,7 @@ sub outlet_switch {
 	die new NZA::Exception($Exception::WrongArguments,
 		"Can't identify value '$sw'. Must be '$NZA::UPS::ValueOn' or '$NZA::UPS::ValueOff'")
 		if (!defined($sw) || !($sw eq $NZA::UPS::ValueOn || $sw eq $NZA::UPS::ValueOff));
-	
+
 	$self->set_var_value("outlet.$num.switch", $sw);
 }
 
@@ -125,7 +125,7 @@ sub set_params {
 		if ($self->{type} eq $NZA::UPS::USBType && exists $params->{port});
 	die new NZA::Exception($Exception::WrongArguments, "UPS: '$self->{name}'. 'port' can't removed. This is mandatory parameter.")
 		if (exists $params->{port} && !defined($params->{port}));
-	
+
 	my $cfg = $self->parent()->{configuration};
 
 	my $port = $params->{port};
@@ -140,7 +140,7 @@ sub set_params {
 			}
 		}
 	}
-	
+
 	my $sn = $self->{name};
 	foreach my $key (keys %$params) {
 		my $v = $params->{$key};
@@ -154,7 +154,7 @@ sub set_params {
 			$cfg->remove_option($sn, $key);
 		}
 	}
-	
+
 	$cfg->commit_on_change("Changing USB configuration");
 }
 
@@ -170,7 +170,7 @@ sub send_instant_command {
 	die new NZA::Exception($Exception::WrongArguments, "UPS: '$self->{name}'. Command must be specified") if (!(defined($command)));
 
 	my ($ups_username, $ups_password) = $self->parent()->get_auth_info();
-	
+
 	my $awcmds = $self->get_instant_commands();
 	foreach my $cmd (keys %$awcmds) {
 		if ($cmd eq $command) {
@@ -188,7 +188,7 @@ sub send_instant_command {
 
 sub get_instant_commands {
 	my ($self) = @_;
-	
+
 	my %cmds = ();
 	my @lines = ();
 	if (defined($self->{inst_cmd_cache})) {
@@ -207,7 +207,7 @@ sub get_instant_commands {
 				$cmds{$nad[0]} = $nad[1];
 			}
 		}
-		
+
 		$self->{inst_cmd_cache} = \%cmds;
 	}
 
@@ -220,9 +220,9 @@ sub set_var_value {
 	die new NZA::Exception($Exception::WrongArguments, "UPS: '$self->{name}'. Name of variable must be defined")
 		if (!(defined($varname)));
 	$varvalue = ' ' if (!(defined($varvalue)));
-	
+
 	my ($ups_username, $ups_password) = $self->parent()->get_auth_info();
-	
+
 	my @lines = ();
 	if (nza_exec("upsrw -s $varname=$varvalue -u $ups_username -p $ups_password $self->{name}\@localhost", \@lines) != 0){
 		die new NZA::Exception($Exception::IOError, "UPS: '$self->{name}'. Can't set variable $varname") if (scalar @lines <= 0);
@@ -232,12 +232,12 @@ sub set_var_value {
 
 sub get_rw_vars {
 	my ($self) = @_;
-	
+
 	my $rw_vars;
 	my @lines = ();
 	if (defined($self->{rw_var_cache})) {
 		$rw_vars = $self->{rw_var_cache};
-	} else {	
+	} else {
 		my ($ups_username, $ups_password) = $self->parent()->get_auth_info();
 
 		if (nza_exec("upsrw -u $ups_username -p $ups_password $self->{name}\@localhost", \@lines) != 0){
@@ -300,7 +300,7 @@ sub get_rw_vars {
 
 sub get_online_status {
 	my ($self) = @_;
-	
+
 	return $self->get_var_value($NZA::UPS::VAR_UPS_STATUS);
 }
 
@@ -359,7 +359,7 @@ $NZA::UPS::PropStartUPSD = 'START_UPSD';
 #constructor
 sub new {
 	my ($class, $ipc) = @_;
-	
+
 	my $self = $class->SUPER::new('UpsContainer', $ipc);
 	bless $self, $class;
 
@@ -405,7 +405,7 @@ sub set_auth_info {
 
 sub get_auth_info {
 	my ($self) = @_;
-	
+
 	if (!(defined($self->{username}))) {
 		$self->_find_auth_info();
 	}
@@ -422,7 +422,7 @@ sub get_auth_info {
 # instcmds = all
 sub _find_auth_info {
 	my ($self) = @_;
-	
+
 	nza_exec("touch $NZA::UPSD_USERS_CONF_FILE") if (!(-e $NZA::UPSD_USERS_CONF_FILE));
 	my $cl = new NZA::IniStyleConfig($NZA::UPSD_USERS_CONF_FILE);
 
@@ -503,7 +503,7 @@ sub remove_ups {
 sub is_configured
 {
 	my ($self, $portorserial) = @_;
-	
+
 	foreach my $name($self->get_names()) {
 		my $s = $self->{configuration}->get_option($name, $NZA::UPS::PropSerial);
 		my $p = $self->{configuration}->get_option($name, $NZA::UPS::PropPort);
@@ -513,7 +513,7 @@ sub is_configured
 			return 1;
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -529,7 +529,7 @@ sub configure_usb_hid_ups {
 	die new NZA::Exception($Exception::WrongArguments,
 		"Params must be a HASH type") if(!defined($params) || !(ref($params) eq 'HASH'));
 
-		
+
 	# check mandatory parameters
 	die new NZA::Exception($Exception::PropertyNotFound,
 		"Parameter 'driver' must be specified") if(!(defined($params->{driver})));
@@ -557,7 +557,7 @@ sub configure_usb_hid_ups {
 		$vendorid =~ s/\|//;
 		$vendorid = substr($vendorid, -4);
 	}
-	
+
 	# find specified USB device
 	my $appl_obj = $NZA::server_obj->get_impl_object('appliance');
 	my $configured = $appl_obj->list_conf_ugen_hid_devs();
@@ -570,11 +570,11 @@ sub configure_usb_hid_ups {
 				last;
 			}
 		}
-		
+
 	}
 	die new NZA::Exception($Exception::DeviceNotFound,
 		"Configured Generic USB device with serial number $tmp_serial not found") if(!(defined($serialno)));
-	
+
 	# check already configured UPSes
 	if ($self->is_configured($serialno)) {
 		die new NZA::Exception($Exception::UPS::PortAlreadySpecified,
@@ -605,7 +605,7 @@ sub configure_usb_hid_ups {
 			$cfg->add_option($name, $NZA::UPS::PropVendorId, $vendorid);
 		}
 	}
-	
+
 	# set description if not found in $params
 	if (!(defined($params->{desc}))) {
 		my $desc = "($serialno)";
@@ -620,11 +620,11 @@ sub configure_usb_hid_ups {
 			$cfg->add_option($name, $NZA::UPS::PropDesc, $desc);
 		}
 	}
-	
+
 	# create child object
 	my $obj = new NZA::Ups($name, $NZA::UPS::USBType);
 	$self->attach($obj, 1);
-	
+
 	#commit changes in config
 	$cfg->commit_on_change("Configuring new USB device");
 }
@@ -655,7 +655,7 @@ sub configure_serial_ups {
 		"Property 'port' not found in params") if(!(defined($params->{port})));
 
 	my $cfg = $self->{configuration};
-	
+
 	# check port exists
 	my $port = $params->{port};
 	die new NZA::Exception($Exception::IOError,
@@ -675,7 +675,7 @@ sub configure_serial_ups {
 	# create child object
 	my $obj = new NZA::Ups($name, $NZA::UPS::SerialType);
 	$self->attach($obj, 1);
-	
+
 	#commit changes in config
 	$cfg->commit_on_change("Configuring new SERIAL device");
 }
@@ -700,14 +700,14 @@ sub enable_service {
 #		if (scalar @$names == 0);
 
 	my @lines = ();
-	my $state = $self->get_service_state(); 
+	my $state = $self->get_service_state();
 	if ($state eq $NZA::SMF_STATE_MAINTENANCE) {
-		if (nza_exec("svcadm clear nut", \@lines) != 0) { 
+		if (nza_exec("svcadm clear nut", \@lines) != 0) {
 			die new NZA::Exception($Exception::SystemCallError, \@lines);
 		}
 		return;
 	}
-	
+
 	if (nza_exec("svcadm enable nut", \@lines) != 0){
 		die new NZA::Exception($Exception::OperationFailed, "Can't enable NUT service") if (scalar @lines <= 0);
 		die new NZA::Exception($Exception::SystemCallError, \@lines);
@@ -719,7 +719,7 @@ sub disable_service {
 
 	my $state = $self->get_service_state();
 	return if ($state =~ /disabled/);
-	
+
 	my @lines = ();
 	if (nza_exec("svcadm disable nut", \@lines) != 0){
 		die new NZA::Exception($Exception::OperationFailed, "Can't disable NUT service") if (scalar @lines <= 0);
@@ -735,7 +735,7 @@ sub disable_service {
 #		sleep ($i < 10 ? 1 : 2);
 #		$i++ if ($i >= 10);
 #	}
-#	
+#
 #	if ($self->get_service_state() =~ /disabled/) {
 #		$self->enable_service();
 #	} else {

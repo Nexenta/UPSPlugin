@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (C) 2006-2009 Nexenta Systems, Inc.
+# Copyright (C) 2005-2011 Nexenta Systems, Inc.
 # All rights reserved.
 #
 
@@ -827,7 +827,7 @@ $NZA::UPS::DRV_SOLIS = "solis";
 	'optparams' => \%NZA::UPS::DRV_SOLIS::OPT_PARAMS,
 );
 
-# Driver for Tripp-Lite SmartPro UPS equipment 
+# Driver for Tripp-Lite SmartPro UPS equipment
 $NZA::UPS::DRV_TRIPPLITE = "tripplite";
 %NZA::UPS::DRV_TRIPPLITE::OPT_PARAMS = (
 	"offdelay" => "Time to wait before the UPS is turned off after the kill power command is sent.",

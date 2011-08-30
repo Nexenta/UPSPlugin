@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (C) 2006-2009 Nexenta Systems, Inc.
+# Copyright (C) 2005-2011 Nexenta Systems, Inc.
 # All rights reserved.
 #
 # METAFILE FOR NMC
@@ -28,15 +28,14 @@
 package Plugin::NmcUPS;
 use base qw(NZA::Plugin);
 
-$Plugin::CLASS			= 'NmcUPS';
+$Plugin::CLASS = 'NmcUPS';
 
-$Plugin::NmcUPS::NAME		= 'nmc-ups';
-$Plugin::NmcUPS::DESCRIPTION	= 'UPS monitoring and easy management extension for NMC';
-$Plugin::NmcUPS::AUTHOR		= 'Nexenta Systems, Inc';
-$Plugin::NmcUPS::LICENSE	= 'CDDL';
-$Plugin::NmcUPS::GROUP		= 'ups';
-$Plugin::NmcUPS::VERSION	= '0.9';
-$Plugin::NmcUPS::LOADER		= 'UPS.pm';
-@Plugin::NmcUPS::FILES		= ('UPS.pm');
+$Plugin::NmcUPS::NAME         = 'nmc-ups';
+$Plugin::NmcUPS::DESCRIPTION  = 'UPS monitoring and easy management extension for NMC';
+$Plugin::NmcUPS::AUTHOR       = 'Nexenta Systems, Inc';
+$Plugin::NmcUPS::LICENSE      = 'CDDL';
+$Plugin::NmcUPS::GROUP        = 'ups';
+$Plugin::NmcUPS::LOADER       = 'UPS.pm';
+@Plugin::NmcUPS::FILES        = ('UPS.pm');
 
 1;

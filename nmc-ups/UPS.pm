@@ -20,7 +20,7 @@
 #
 
 #
-# Copyright (C) 2006-2009 Nexenta Systems, Inc.
+# Copyright (C) 2005-2011 Nexenta Systems, Inc.
 # All rights reserved.
 #
 
@@ -64,7 +64,7 @@ my %setup_ups_words =
 	service => {
 		_help => ["enable or disable NUT service"],
 		_usage => \&setup_service_manage_usage,
-		
+
 		enable => {
 			_help => ["enable NUT service"],
 			_enter => \&setup_service_manage,
@@ -88,7 +88,7 @@ my %setup_ups_words =
 			_enter => \&setup_cfg_remove,
 			_usage => \&setup_cfg_remove_usage,
 		},
-		
+
 		'modify' => {
 			_help => ["add, modify or remove property from UPS configuration"],
 			_usage => \&setup_modify_usage,
@@ -96,10 +96,10 @@ my %setup_ups_words =
 			_unknown => {
 				_recompute => \&setup_properties_recompute,
 				_usage => \&setup_modify_usage,
-				
+
 				set => {
 					_help => ["add or modify property for UPS configuration"],
-					
+
 					_enter => \&setup_property_set,
 					_usage => \&setup_modify_set_usage,
 				},
@@ -154,7 +154,7 @@ my %setup_ups_words =
 			},
 		},
 	},
-	
+
 );
 
 my %show_ups_words =
@@ -403,7 +403,7 @@ sub setup_ports_or_serials_recompute
 			$h->{$ser} = $h->{_unknown};
 		}
 	}
-	
+
 	return $h;
 }
 
@@ -445,7 +445,7 @@ sub setup_drivers_recompute
 sub _refresh_service
 {
 	my $state;
-	
+
 	eval {
 		&NZA::plugin('nms-ups')->disable_service();
 	}; if ($@) {
@@ -603,7 +603,7 @@ sub _setup_serial_ups
 	$params{desc} = $ups_desc if ($ups_desc);
 	$params{sdorder} = $sdorder if (defined($sdorder));
 	$params{maxstartdelay} = $maxstartdelay if (defined($maxstartdelay));
-	
+
 	eval {
 		&NZA::plugin('nms-ups')->configure_serial_ups($ups_name, \%params);
 	}; if ($@) {
@@ -620,7 +620,7 @@ sub _setup_serial_ups
 sub setup_ups_usage
 {
         my ($cmdline, $prompt, $service, $action, $driver, $port, @path) = @_;
-	
+
 	my $forUsage = 'for a selected serial or USB based UPS device.';
 	if ($driver && $driver !~ /^-/ && $driver !~ /help/) {
 		if (exists($NZA::UPS::SERIAL_UPSES{$driver})) {
@@ -632,27 +632,27 @@ sub setup_ups_usage
 	if ($port && $port !~ /^-/ && $port !~ /help/) {
 		$forUsage .= " on port $port";
 	}
-	
+
 	print_out <<EOF;
 $cmdline
-Usage: 
-       <driver> <port|serialno> [-y] 
-                                [-n <ups name>] 
+Usage:
+       <driver> <port|serialno> [-y]
+                                [-n <ups name>]
                                 [-d <ups description>]
 	                        [-o <sdorder>]
 			        [-t maxstartdelay]
 
 Create new UPS configuration $forUsage
 
-   -y                  Skip confirmation dialog by automatically 
+   -y                  Skip confirmation dialog by automatically
    		       responding Yes
-   -n  <ups_name>      UPS device name 
+   -n  <ups_name>      UPS device name
    -d  <description>   Description
-   
-   -o  <sdorder>       Shutdown order ('sdorder') - the order in 
-   		       which your UPS devices receive shutdown commands. 
+
+   -o  <sdorder>       Shutdown order ('sdorder') - the order in
+   		       which your UPS devices receive shutdown commands.
 		       With multiple UPSes in the system, you would
-		       typically need to turn them off in a certain 
+		       typically need to turn them off in a certain
 		       pre-defined order.
 
    -t <maxstartdelay>  This can be set as a global sustem-wide setting,
@@ -660,7 +660,7 @@ Create new UPS configuration $forUsage
 
 Examples:
 =========
-1) Add new configuration for APC Smart UPS on COM1 port and name 
+1) Add new configuration for APC Smart UPS on COM1 port and name
    this UPS configuration "main_ups".
 
 ${prompt}setup ups add apcsmart /dev/cua0 -n main_ups
@@ -700,7 +700,7 @@ sub _setup_usb_ups
 		print_error("Can't get list of unconfigured USB devices. Reason: $@\n");
 		return 0;
 	}
-	
+
 	my $device_info;
 	my $cfg_flag;
 	for my $dev (@$usbdevs) {
@@ -722,7 +722,7 @@ sub _setup_usb_ups
 			}
 		}
 	}
-	
+
 	if (defined($device_info)) {
 
 		# if USB device not configured. Configure it now
@@ -734,7 +734,7 @@ sub _setup_usb_ups
 				return 0;
 			}
 		}
-		
+
 		unless ($ups_name) {
 			return 0 if (!NMC::Util::input_field('UPS name',
 					10,
@@ -785,7 +785,7 @@ sub setup_cfg_remove
 	my ($h, @path) = @_;
 	my ($service, $ups_name) = @path;
 	my ($yes) = NMC::Util::get_optional('y', \@path);
-	
+
 	if ($yes || &NMC::Util::input_confirm("Remove UPS '$ups_name'?")) {
 		my $state;
 		eval {
@@ -837,38 +837,38 @@ sub setup_cfg_remove
 sub setup_ups_genusage
 {
         my ($cmdline, $prompt, $service, $ups_name, $action, @path) = @_;
-	
+
 	print_out <<EOF;
 $cmdline
 Usage:
 
-Setup UPS device. The following UPS management operations 
+Setup UPS device. The following UPS management operations
 are available:
 
   * setup ups <ups_name> remove
-    to remove selected UPS configuration 
+    to remove selected UPS configuration
 
   * setup ups <ups_name> modify
-    to modify (add, change or remove properties) for the 
+    to modify (add, change or remove properties) for the
     specified UPS configuration.
 
                    Note:
                    =====
-The next 3 operations require that the state of the underlying 
+The next 3 operations require that the state of the underlying
 Network UPS Tools (NUT) is online.
 
   * setup ups <ups_name> set-var
-    to inspect or assign a UPS device property. 
+    to inspect or assign a UPS device property.
 
   * setup ups <ups_name> send-command
-    to execute an instant command to selected UPS. 
-    
-  * setup ups <ups_name> outlet
-    to administer UPS outlet(s) 
-    
+    to execute an instant command to selected UPS.
 
-$NZA::PRODUCT UPS plugin uses Network UPS Tools (NUT) 
-service to provide reliable monitoring of UPS hardware and 
+  * setup ups <ups_name> outlet
+    to administer UPS outlet(s)
+
+
+$NZA::PRODUCT UPS plugin uses Network UPS Tools (NUT)
+service to provide reliable monitoring of UPS hardware and
 ensure safe shutdowns of the UPS connected systems.
 
 Features:
@@ -884,11 +884,11 @@ Features:
 For more information on NUT functionality, please see:
 
  * http://eu1.networkupstools.org/features/ for more information.
- 
+
 For supported hardware see:
 
   * http://eu1.networkupstools.org/compat/stable.html
- 
+
 
 See also: 'setup ups <ups_name> remove'
 
@@ -910,14 +910,14 @@ EOF
 sub setup_cfg_remove_usage
 {
         my ($cmdline, $prompt, $service, $ups_name, $action, @path) = @_;
-	
+
 	print_out <<EOF;
 $cmdline
 Usage: [-y]
 
     -y    Skip confirmation dialog by automatically responding Yes
 
-Remove selected UPS configuration. This operation automatically 
+Remove selected UPS configuration. This operation automatically
 restarts Network UPS Tools (NUT) service, if the latter is enabled.
 
 Example:
@@ -941,7 +941,7 @@ sub setup_setvar_recompute
 {
 	my ($h, @path) = @_;
 	my ($service, $ups_name, $action) = @path;
-	
+
 	my $state;
 	eval {
 		$state = &NZA::plugin('nms-ups')->get_service_state();
@@ -962,7 +962,7 @@ sub setup_setvar_recompute
 			print_error("Can't get list of r/w variables. Reason: $@\n");
 		}
 	}
-	
+
 	return $h;
 }
 
@@ -1044,19 +1044,19 @@ sub setup_setvar
 sub setup_setvar_usage
 {
         my ($cmdline, $prompt, $service, $ups_name, $action, @path) = @_;
-	
+
 	print_out <<EOF;
 $cmdline
 Usage: [-s <new_value>]
 
    -s   new UPS device property value
 
-Modify UPS device property. Note that Network UPS Tools (NUT) 
+Modify UPS device property. Note that Network UPS Tools (NUT)
 service must be enabled and the new value must be in a valid range.
 
 Examples:
 =========
-1) Set test interval to 3000 seconds for UPS identified 
+1) Set test interval to 3000 seconds for UPS identified
    as "main_ups".
 
 ${prompt}setup ups main_ups set-var ups.test.interval -s 3000
@@ -1080,7 +1080,7 @@ sub setup_sendcmd_recompute
 {
 	my ($h, @path) = @_;
 	my ($service, $ups_name, $action) = @path;
-	
+
 	my $state;
 	eval {
 		$state = &NZA::plugin('nms-ups')->get_service_state();
@@ -1152,7 +1152,7 @@ sub setup_properties_recompute
 {
 	my ($h, @path) = @_;
 	my ($service, $ups_name, $action) = @path;
-	
+
 	my $drv_name = _get_driver_by_name($ups_name);
 	return $h unless ($drv_name);
 
@@ -1172,21 +1172,21 @@ sub setup_properties_recompute
 		$tmp->{_help} = [$NZA::UPS::DRV::OPT_PARAMS{$pn}];
 		$h->{$pn} = $tmp;
 	}
-	
+
 	return $h;
 }
 
 sub _get_driver_by_name
 {
 	my ($ups_name) = @_;
-	
+
 	my $params;
 	eval {
 		$params = &NZA::plugin('nms-ups')->get_params($ups_name);
 	}; if ($@) {
 		return undef;
 	}
-	
+
 	return $params->{driver};
 }
 
@@ -1200,7 +1200,7 @@ sub setup_modify_set_usage
 
 		if ($drv_name) {
 			if (exists($NZA::UPS::DRV::OPT_PARAMS{$prop_name})) {
-				$prop_desc = "\nProperty '$prop_name' note:\n==========\n    $NZA::UPS::DRV::OPT_PARAMS{$prop_name}\n"; 
+				$prop_desc = "\nProperty '$prop_name' note:\n==========\n    $NZA::UPS::DRV::OPT_PARAMS{$prop_name}\n";
 			} else {
 				my $drv_params;
 				if ($NZA::UPS::SERIAL_UPSES{$drv_name}) {
@@ -1341,7 +1341,7 @@ sub setup_property_set
 		print_error("Property '$var_name' not found for UPS '$ups_name'\n");
 		return 0;
 	}
-	
+
 	my %setparams = ();
 	if ($action1 eq 'remove') {
 		$setparams{$var_name} = undef;
@@ -1372,7 +1372,7 @@ sub setup_property_set
 sub setup_sendcmd_usage
 {
         my ($cmdline, $prompt, $service, $ups_name, $action, @path) = @_;
-	
+
 	print_out <<EOF;
 $cmdline
 Usage: <cmd_name>
@@ -1432,7 +1432,7 @@ sub setup_outlet_recompute
 			$h->{$i} = $h->{_unknown};
 		}
 	}
-	
+
 	return $h;
 }
 
@@ -1456,7 +1456,7 @@ sub enable_outlet
 sub setup_outlet_usage
 {
         my ($cmdline, $prompt, $service, $ups_name, $action, @path) = @_;
-	
+
 	print_out <<EOF;
 $cmdline
 Usage:
@@ -1466,15 +1466,15 @@ Enable or disable the specified UPS outlet.
 This operation requires that the the Network UPS Tools (NUT)
 service is enabled.
 
-$NZA::PRODUCT UPS plugin uses Network UPS Tools (NUT) 
-service to provide reliable monitoring of UPS hardware and 
+$NZA::PRODUCT UPS plugin uses Network UPS Tools (NUT)
+service to provide reliable monitoring of UPS hardware and
 ensure safe shutdowns of the UPS connected systems.
 
 Examples:
 =========
 1) Power off outlet number 0 for UPS identified by
    configuration named 'main_ups'.
-   
+
 ${prompt}setup ups main_ups outlet 0 disable
 
 2) Power on outlet number 2 for UPS identified by
@@ -1553,18 +1553,18 @@ sub setup_service_manage_usage
 			$action_txt = "Disable";
 		}
 	}
-	
+
 	print_out <<EOF;
 $cmdline
 Usage:
 
-$action_txt Network UPS Tools (NUT) service. 
+$action_txt Network UPS Tools (NUT) service.
 
-$NZA::PRODUCT UPS (Uninterruptible Power Supply) extension provides 
-reliable monitoring and easy management of UPS hardware. 
+$NZA::PRODUCT UPS (Uninterruptible Power Supply) extension provides
+reliable monitoring and easy management of UPS hardware.
 
-The extension uses Network UPS Tools (NUT) service to provide 
-reliable monitoring of UPS hardware and ensure safe shutdowns of 
+The extension uses Network UPS Tools (NUT) service to provide
+reliable monitoring of UPS hardware and ensure safe shutdowns of
 the UPS connected systems.
 
 The UPS extension features:
@@ -1580,11 +1580,11 @@ The UPS extension features:
 For more information on NUT functionality, please see:
 
  * http://eu1.networkupstools.org/features/ for more information.
- 
+
 For supported hardware see:
 
   * http://eu1.networkupstools.org/compat/stable.html
- 
+
 Examples:
 =========
 1) Start NUT service.
@@ -1649,11 +1649,11 @@ Show online status of the specified UPS device.
 UPS online status may have one of the following enumerated values:
 
 EOF
-	
+
 	for my $st (sort values %NZA::UPS::ONLINE_STATUSES) {
 		print_out("$st\n");
 	}
-	
+
 	print_out <<EOF
 
 See also: 'show ups <ups_name> full-status'
@@ -1669,7 +1669,7 @@ EOF
 sub _print_full_status {
 	my ($upsname) = @_;
 	my ($vars, $rws);
-	
+
 	eval {
 		$vars = &NZA::plugin('nms-ups')->get_status($upsname);
 		$rws = &NZA::plugin('nms-ups')->get_rw_vars($upsname);
@@ -1718,7 +1718,7 @@ sub show_ups_unk_full_status_usage
 	print_out <<EOF;
 $cmdline
 
-For the specified UPS device, show detailed status information, 
+For the specified UPS device, show detailed status information,
 including all device's properties and their values.
 
 
@@ -1736,7 +1736,7 @@ sub _print_available_inst_cmds
 {
 	my ($upsname) = @_;
 	my $cmds;
-	
+
 	eval {
 		$cmds = &NZA::plugin('nms-ups')->get_instant_commands($upsname);
 	}; if ($@) {
@@ -1767,7 +1767,7 @@ sub show_ups_unk_commands_usage
 	my ($cmdline, $prompt, @path) = @_;
 	print_out <<EOF;
 $cmdline
-Usage: 
+Usage:
 
 Display all instant commands (if any) supported by a given UPS device.
 
@@ -1828,10 +1828,10 @@ sub show_ups_unk_outlets_usage
 	my ($cmdline, $prompt, @path) = @_;
 	print_out <<EOF;
 $cmdline
-Usage: 
+Usage:
 
 If outlet control information is supported by the device,
-display detailed status of the selected UPS outlets. 
+display detailed status of the selected UPS outlets.
 
 
 See also: 'show ups <ups_name> short-status'
@@ -1869,15 +1869,15 @@ sub show_service_state_usage
 	my ($cmdline, $prompt, @path) = @_;
 	print_out <<EOF;
 $cmdline
-Usage: 
+Usage:
 
 Show Network UPS Tools (NUT) service state.
 
-Network UPS Tools (NUT) provides a common interface 
-for monitoring and administering UPS hardware. 
+Network UPS Tools (NUT) provides a common interface
+for monitoring and administering UPS hardware.
 
-$NZA::PRODUCT pluggable extension uses Network UPS Tools (NUT) 
-service to provide reliable monitoring of UPS hardware and 
+$NZA::PRODUCT pluggable extension uses Network UPS Tools (NUT)
+service to provide reliable monitoring of UPS hardware and
 ensure safe shutdowns of the UPS connected systems.
 
 EOF
@@ -1912,7 +1912,7 @@ sub show_ups_properties_usage
 	my ($cmdline, $prompt, @path) = @_;
 	print_out <<EOF;
 $cmdline
-Usage: 
+Usage:
 
 Display configuration properties of the specified UPS device.
 
@@ -1931,13 +1931,13 @@ sub show_usage
 	my ($cmdline, $prompt, @path) = @_;
 	print_out <<EOF;
 $cmdline
-Usage: 
+Usage:
 
-$NZA::PRODUCT UPS (Uninterruptible Power Supply) extension provides 
-reliable monitoring and easy management of UPS hardware. 
+$NZA::PRODUCT UPS (Uninterruptible Power Supply) extension provides
+reliable monitoring and easy management of UPS hardware.
 
 Use NMC 'show' operations (listed below) to view:
-  
+
   * the state of the underlying UPS service called Network UPS Tools
     (NUT)
   * available UPS devices
@@ -1963,8 +1963,8 @@ sub show_ups_usage
 	my ($cmdline, $prompt, @path) = @_;
 	print_out <<EOF;
 
-$NZA::PRODUCT UPS (Uninterruptible Power Supply) extension provides 
-reliable monitoring and easy management of UPS hardware. 
+$NZA::PRODUCT UPS (Uninterruptible Power Supply) extension provides
+reliable monitoring and easy management of UPS hardware.
 
 Run:
 
@@ -1976,7 +1976,7 @@ Run:
 
   * show ups <ups_name> commands
     to view all instant commands supported by a given UPS device.
-    
+
                  Note:
                  =====
 Some UPS hardware and drivers support instant commands,
@@ -1984,7 +1984,7 @@ such as starting a battery test, or powering off the load.
 
 
   * show ups <ups_name> outlets
-    to list power outlets of the selected UPS, if the outlet 
+    to list power outlets of the selected UPS, if the outlet
     control information is available.
 
 EOF
