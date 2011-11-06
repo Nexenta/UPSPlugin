@@ -2,11 +2,11 @@ Source: nmc-ups
 Section: base
 Priority: optional
 Maintainer: Nexenta Systems <maintainer@nexenta.com>
-Build-Depends: debhelper(>= 40-0-6)
+Build-Depends: debhelper (>= 40-0-11)
 
 Package: nmc-ups
 Architecture: any
-Depends: ${perl:Depends}, nmc (>= 40-0-0), nms-ups (>= 40-0-0)
+Depends: nmc (>= 40-0-0), nms-ups (>= 40-0-0)
 Description: [:nxplugin::nmc:ups] UPS monitoring and easy management extension for NMC
  UPS monitoring and easy management extension for Nexenta Management Console
  .

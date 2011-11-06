@@ -1,12 +1,12 @@
 Source: nms-ups
 Section: base
 Priority: optional
-Maintainer: Erast Benson <erast@gnusolaris.org>
-Build-Depends: debhelper(>=4.9.5gnusol5)
+Maintainer: Nexenta Systems <maintainer@nexenta.com>
+Build-Depends: debhelper (>= 40-0-11)
 
 Package: nms-ups
-Architecture: solaris-i386
-Depends: ${shlibs:Depends}, nms-dev (>= 1.0.7), nut
+Architecture: any
+Depends: nms (>= 40-0-0), network-nut
 Description: [:nxplugin::nms:!ups] UPS monitoring and easy management extension
  UPS monitoring and easy management extension for Nexenta Management Server
  .
